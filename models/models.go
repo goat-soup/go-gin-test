@@ -61,5 +61,7 @@ func init() {
 }
 
 func CloseDB() {
-	defer sqlDB.Close()
+	if sqlDB != nil {
+		sqlDB.Close()
+	}
 }
