@@ -1,9 +1,15 @@
 package models
 
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
 type Tag struct {
 	Model
 	Name       string `json:"name"`
-	CreateBy   string `json:"created_by"`
+	CreatedBy  string `grom:"column:created_by" json:"created_by"`
 	ModifiedBy string `json:"modified_by"`
 	State      int    `json:"state"`
 }
@@ -24,11 +30,39 @@ func ExistsTagByName(name string) bool {
 	return tag.ID > 0
 }
 
-func AddTag(name string, state int, createBy string) bool {
+func ExistsTagByID(id int) bool {
+	var tag Tag
+	db.Select("id").Where("id = ?", id).First(&tag)
+	return tag.ID > 0
+}
+
+func AddTag(name string, state int, createdBy string) bool {
 	db.Create(&Tag{
-		Name:     name,
-		State:    state,
-		CreateBy: createBy,
+		Name:      name,
+		State:     state,
+		CreatedBy: createdBy,
 	})
+	return true
+}
+
+func (tag *Tag) BeforeCreate(tx *gorm.DB) (err error) {
+	tx.Statement.SetColumn("CreatedOn", time.Now().Unix())
+	return
+}
+
+func (tag *Tag) BeforeUpdate(tx *gorm.DB) (err error) {
+	tx.Statement.SetColumn("ModifiedOn", time.Now().Unix())
+	return
+}
+
+// EditTag 编辑标签
+func EditTag(id int, data map[string]interface{}) bool {
+	db.Model(&Tag{}).Where("id = ?", id).Updates(data)
+	return true
+}
+
+// DeleteTag 删除标签
+func DeleteTag(id int) bool {
+	db.Where("id = ? ", id).Delete(&Tag{})
 	return true
 }
