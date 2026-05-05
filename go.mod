@@ -3,6 +3,7 @@ module example.com/m
 go 1.25.0
 
 require (
+	github.com/astaxie/beego v1.12.3
 	github.com/gin-gonic/gin v1.12.0
 	github.com/unknwon/com v1.0.1
 	gopkg.in/ini.v1 v1.67.2
@@ -12,7 +13,6 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.2.0 // indirect
-	github.com/astaxie/beego v1.12.3 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
 	github.com/bytedance/sonic v1.15.1 // indirect
 	github.com/bytedance/sonic/loader v0.5.1 // indirect
