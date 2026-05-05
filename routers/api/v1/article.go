@@ -14,8 +14,7 @@ import (
 )
 
 func GetArticle(c *gin.Context) {
-	id := com.StrTo(c.Param("id")
-	valid.MaxSize(modifiedBy, 100, "modified_by").Message("修改人最长为100字符")).MustInt()
+	id := com.StrTo(c.Param("id")).MustInt()
 	valid := validation.Validation{}
 	valid.Min(id, 1, "id").Message("ID必须大于0")
 	code := e.INVALID_PARAMS
@@ -149,9 +148,9 @@ func EditArticle(c *gin.Context) {
 
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
-		if models.ExistArticleByID(id){
+		if models.ExistArticleByID(id) {
 			if models.ExistTagByID(tagId) {
-			    data := make(map[string]interface{})
+				data := make(map[string]interface{})
 				if tagId > 0 {
 					data["tag_id"] = tagId
 				}
