@@ -94,7 +94,7 @@ func AddArticle(c *gin.Context) {
 
 	code := e.INVALID_PARAMS
 	if !valid.HasErrors() {
-		if models.ExistArticleByID(tagId) {
+		if models.ExistsTagByID(tagId) {
 			data := make(map[string]interface{})
 			data["tag_id"] = tagId
 			data["title"] = title
@@ -165,6 +165,7 @@ func EditArticle(c *gin.Context) {
 				}
 				data["modified_by"] = modifiedBy
 				models.EditArticle(id, data)
+				code = e.SUCCESS
 			} else {
 				code = e.ERROR_NOT_EXIST_TAG
 			}
