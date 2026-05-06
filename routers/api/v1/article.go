@@ -7,6 +7,7 @@ import (
 	"example.com/m/models"
 	setting "example.com/m/pkg"
 	e "example.com/m/pkg/e"
+	"example.com/m/pkg/logging"
 	"example.com/m/pkg/util"
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
@@ -28,7 +29,7 @@ func GetArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
