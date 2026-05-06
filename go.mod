@@ -5,6 +5,7 @@ go 1.25.0
 require (
 	github.com/astaxie/beego v1.12.3
 	github.com/gin-gonic/gin v1.12.0
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/unknwon/com v1.0.1
 	gopkg.in/ini.v1 v1.67.2
 	gorm.io/driver/mysql v1.6.0
