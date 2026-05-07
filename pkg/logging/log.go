@@ -35,24 +35,24 @@ func init() {
 
 func Debug(v ...interface{}) {
 	setPrefix(DEBUG)
-	logger.Print(v)
+	logger.Print(v...)
 }
 
 func Info(v ...interface{}) {
 	setPrefix(INFO)
-	logger.Print(v)
+	logger.Print(v...)
 }
 func Warn(v ...interface{}) {
 	setPrefix(WARN)
-	logger.Print(v)
+	logger.Print(v...)
 }
 func Error(v ...interface{}) {
 	setPrefix(ERROR)
-	logger.Print(v)
+	logger.Print(v...)
 }
 func Fatal(v ...interface{}) {
 	setPrefix(FATAL)
-	logger.Print(v)
+	logger.Print(v...)
 }
 func setPrefix(level Level) {
 	_, file, line, ok := runtime.Caller(DefaultCallerDepth)
