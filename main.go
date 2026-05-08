@@ -9,12 +9,19 @@ import (
 	"os/signal"
 	"time"
 
+	cronJob "example.com/m/cron"
+	"example.com/m/models"
 	setting "example.com/m/pkg"
 	"example.com/m/pkg/logging"
 	"example.com/m/routers"
 )
 
 func main() {
+	// 启动定时任务
+	c := cronJob.Setup()
+	defer c.Stop()
+	defer models.CloseDB()
+
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", setting.HttpPort),
 		Handler:        routers.InitRouter(),

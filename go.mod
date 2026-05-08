@@ -6,6 +6,7 @@ require (
 	github.com/astaxie/beego v1.12.3
 	github.com/gin-gonic/gin v1.12.0
 	github.com/golang-jwt/jwt/v4 v4.5.2
+	github.com/robfig/cron/v3 v3.0.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.1
 	github.com/swaggo/swag v1.16.6
@@ -13,6 +14,7 @@ require (
 	gopkg.in/ini.v1 v1.67.2
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.1
+	gorm.io/plugin/soft_delete v1.2.1
 )
 
 require (

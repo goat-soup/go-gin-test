@@ -11,16 +11,18 @@ import (
 	_ "gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"gorm.io/gorm/schema" //
+	"gorm.io/gorm/schema"
+	"gorm.io/plugin/soft_delete"
 )
 
 var db *gorm.DB
 var sqlDB *sql.DB
 
 type Model struct {
-	ID         int `gorm:"primary_key" json:"id"`
-	CreatedOn  int `json:"created_on"`
-	ModifiedOn int `json:"modified_on"`
+	ID         int                   `gorm:"primary_key" json:"id"`
+	CreatedOn  int                   `json:"created_on"`
+	ModifiedOn int                   `json:"modified_on"`
+	DeletedOn  soft_delete.DeletedAt `json:"deleted_on"`
 }
 
 func init() {
@@ -75,4 +77,16 @@ func CloseDB() {
 	if sqlDB != nil {
 		sqlDB.Close()
 	}
+}
+
+// CleanAllTag 硬删除所有已软删除的 Tag
+func CleanAllTag() bool {
+	db.Unscoped().Where("deleted_on != ?", 0).Delete(&Tag{})
+	return true
+}
+
+// CleanAllArticle 硬删除所有已软删除的 Article
+func CleanAllArticle() bool {
+	db.Unscoped().Where("deleted_on != ?", 0).Delete(&Article{})
+	return true
 }
