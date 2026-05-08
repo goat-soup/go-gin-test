@@ -1,11 +1,5 @@
 package models
 
-import (
-	"time"
-
-	"gorm.io/gorm"
-)
-
 type Tag struct {
 	Model
 	Name       string `json:"name"`
@@ -43,16 +37,6 @@ func AddTag(name string, state int, createdBy string) bool {
 		CreatedBy: createdBy,
 	})
 	return true
-}
-
-func (tag *Tag) BeforeCreate(tx *gorm.DB) (err error) {
-	tx.Statement.SetColumn("CreatedOn", time.Now().Unix())
-	return
-}
-
-func (tag *Tag) BeforeUpdate(tx *gorm.DB) (err error) {
-	tx.Statement.SetColumn("ModifiedOn", time.Now().Unix())
-	return
 }
 
 // EditTag 编辑标签

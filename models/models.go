@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"time"
 
 	setting "example.com/m/pkg"
 	"gorm.io/driver/mysql"
@@ -58,6 +59,16 @@ func init() {
 	}
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
+
+	// 注册全局 Callback：Create 之前自动设置 CreatedOn
+	db.Callback().Create().Before("gorm:create").Register("update_created_on", func(tx *gorm.DB) {
+		tx.Statement.SetColumn("CreatedOn", time.Now().Unix())
+	})
+
+	// 注册全局 Callback：Update 之前自动设置 ModifiedOn
+	db.Callback().Update().Before("gorm:update").Register("update_modified_on", func(tx *gorm.DB) {
+		tx.Statement.SetColumn("ModifiedOn", time.Now().Unix())
+	})
 }
 
 func CloseDB() {
